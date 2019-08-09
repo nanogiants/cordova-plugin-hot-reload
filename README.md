@@ -15,6 +15,7 @@ if (window.location.protocol !== 'file:') {
 ```
 
 The files are served via symlinks from your public folder and pointing to the correct platform files.
+To keep your symlinks out of git remember to add `public/cordova` to your `.gitignore` file.
 
 ### preparation
 ```

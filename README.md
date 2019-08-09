@@ -15,3 +15,14 @@ if (window.location.protocol !== 'file:') {
 ```
 
 The files are served via symlinks from your public folder and pointing to the correct platform files.
+
+### preparation
+```
+npm i concurrently wait-on
+```
+
+To serve your frontend files you could start your app like so
+```
+"serve:android": "PORT=8080 concurrently \"npm run serve -- --mode=development\" \"wait-on http://localhost:8080 && cordova run android\""
+```
+you *have* to set the `PORT` environment, so the plugin can point to the correct port.

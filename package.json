@@ -1,0 +1,24 @@
+{
+  "name": "cordova-plugin-hot-reload",
+  "version": "0.1.0",
+  "description": "Cordova Hot-Reload Plugin",
+  "cordova": {
+    "id": "cordova-plugin-hot-reload",
+    "platforms": [
+      "android",
+      "ios",
+      "browser"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "hot-reload",
+    "live-reload",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-browser"
+  ],
+  "author": "appcom interactive GmbH",
+  "license": "MIT"
+}

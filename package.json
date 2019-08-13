@@ -19,6 +19,14 @@
     "cordova-ios",
     "cordova-browser"
   ],
-  "author": "appcom interactive GmbH",
-  "license": "MIT"
+  "author": "René Heinen <r.heinen@appcom-interactive.de> (http://appcom-interactive.de)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appcom-interactive/cordova-plugin-hot-reload"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "address": "^1.1.0",
+    "default-gateway": "^5.0.2"
+  }
 }

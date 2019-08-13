@@ -1,13 +1,14 @@
 const fs = require('fs');
 const path = require('path');
-var os = require('os');
+const os = require('os');
+const address = require('address');
+const defaultGateway = require('default-gateway');
 
 module.exports = function(context) {
   const projectRoot = context.opts.projectRoot;
 
-  var ifaces = os.networkInterfaces();
-
-  const ip = ifaces['en0'].find(iface => iface.family === 'IPv4').address;
+  const result = defaultGateway.v4.sync();
+  const ip = address.ip(result && result.interface);
   const port = process.env.PORT;
   const url = `http://${ip}:${port}`;
 
@@ -31,15 +32,13 @@ module.exports = function(context) {
   }
 
   //create symlinks for platforms
+  const symlinkType = os.platform() === 'win32' ? 'junction' : 'dir';
   const platform = context.opts.platforms[0];
   const symlinkDestPath = path.join(projectRoot, '/public/cordova');
-  const symlinkSrcPath = path.join(
-    projectRoot,
-    `platforms/${platform}/platform_www`
-  );
+  const symlinkSrcPath = path.join(projectRoot, `platforms/${platform}/platform_www`);
 
   if (fs.existsSync(symlinkDestPath)) {
     fs.unlinkSync(symlinkDestPath);
   }
-  fs.symlinkSync(symlinkSrcPath, symlinkDestPath, 'dir');
+  fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
 };

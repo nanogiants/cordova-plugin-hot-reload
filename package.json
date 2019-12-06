@@ -1,7 +1,16 @@
 {
   "name": "cordova-plugin-hot-reload",
   "version": "0.1.0",
+  "author": "René Heinen <r.heinen@appcom-interactive.de> (http://appcom-interactive.de)",
+  "license": "MIT",
   "description": "Cordova Hot-Reload Plugin",
+  "scripts": {
+    "publish": "npm publish"
+  },
+  "dependencies": {
+    "address": "^1.1.0",
+    "default-gateway": "^5.0.2"
+  },
   "cordova": {
     "id": "cordova-plugin-hot-reload",
     "platforms": [
@@ -19,14 +28,12 @@
     "cordova-ios",
     "cordova-browser"
   ],
-  "author": "René Heinen <r.heinen@appcom-interactive.de> (http://appcom-interactive.de)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appcom-interactive/cordova-plugin-hot-reload"
+    "url": "git+https://github.com/appcom-interactive/cordova-plugin-hot-reload.git"
   },
-  "license": "MIT",
-  "dependencies": {
-    "address": "^1.1.0",
-    "default-gateway": "^5.0.2"
-  }
+  "bugs": {
+    "url": "https://github.com/appcom-interactive/cordova-plugin-hot-reload/issues"
+  },
+  "homepage": "https://github.com/appcom-interactive/cordova-plugin-hot-reload#readme"
 }

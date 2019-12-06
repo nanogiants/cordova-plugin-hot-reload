@@ -1,5 +1,5 @@
 {
-  "name": "cordova-plugin-hot-reload",
+  "name": "@appcominteractive/cordova-plugin-hot-reload",
   "version": "0.1.1",
   "author": "René Heinen <r.heinen@appcom-interactive.de> (http://appcom-interactive.de)",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "default-gateway": "^5.0.2"
   },
   "cordova": {
-    "id": "cordova-plugin-hot-reload",
+    "id": "@appcominteractive/cordova-plugin-hot-reload",
     "platforms": [
       "android",
       "ios",

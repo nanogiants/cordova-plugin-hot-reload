@@ -6,7 +6,7 @@ It creates two hooks that modify your config.xml and point the content to the lo
 
 ### Installation
 ```
-cordova plugin add cordova-plugin-hot-reload
+cordova plugin add @appcominteractive/cordova-plugin-hot-reload
 ```
 
 ### Cordova files

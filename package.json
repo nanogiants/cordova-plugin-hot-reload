@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-hot-reload",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "René Heinen <r.heinen@appcom-interactive.de> (http://appcom-interactive.de)",
   "license": "MIT",
   "description": "Cordova Hot-Reload Plugin",

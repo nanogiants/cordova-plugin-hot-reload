@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const os = require('os');
 const address = require('address');
 const defaultGateway = require('default-gateway');
 const xmlToJs = require('xml2js');
@@ -32,9 +31,13 @@ module.exports = async function (context) {
 
   fs.writeFileSync(cordovaConfigPath, xml);
 
-  const symlinkDestPath = path.join(projectRoot, '/public/cordova');
+  const cordovaFiles = ['cordova.js', 'cordova_plugins.js', 'plugins'];
 
-  if (fs.existsSync(symlinkDestPath)) {
-    fs.unlinkSync(symlinkDestPath);
-  }
+  cordovaFiles.forEach((filename) => {
+    const symlinkDestPath = path.join(projectRoot, 'public', filename);
+
+    if (fs.existsSync(symlinkDestPath)) {
+      fs.unlinkSync(symlinkDestPath);
+    }
+  });
 };

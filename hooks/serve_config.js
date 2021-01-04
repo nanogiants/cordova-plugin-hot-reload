@@ -4,6 +4,7 @@ const os = require('os');
 const address = require('address');
 const defaultGateway = require('default-gateway');
 const xmlToJs = require('xml2js');
+
 module.exports = async function (context) {
   const { projectRoot } = context.opts;
 
@@ -34,14 +35,23 @@ module.exports = async function (context) {
   //create symlinks for platforms
   const symlinkType = os.platform() === 'win32' ? 'junction' : 'dir';
   const platform = context.opts.platforms[0];
-  const symlinkDestPath = path.join(projectRoot, '/public/cordova');
-  const symlinkSrcPath = path.join(
-    projectRoot,
-    `platforms/${platform}/platform_www`
-  );
 
-  if (fs.existsSync(symlinkDestPath)) {
-    fs.unlinkSync(symlinkDestPath);
-  }
-  fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
+  const cordovaFiles = ['cordova.js', 'cordova_plugins.js', 'plugins'];
+
+  cordovaFiles.forEach((filename) => {
+    const symlinkSrcPath = path.join(
+      projectRoot,
+      'platforms',
+      platform,
+      'platform_www',
+      filename
+    );
+
+    const symlinkDestPath = path.join(projectRoot, 'public', filename);
+
+    if (fs.existsSync(symlinkDestPath)) {
+      fs.unlinkSync(symlinkDestPath);
+    }
+    fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
+  });
 };

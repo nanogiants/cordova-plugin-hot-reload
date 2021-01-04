@@ -1,32 +1,36 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const address = require('address');
+const defaultGateway = require('default-gateway');
+const xmlToJs = require('xml2js');
 
-module.exports = function(context) {
-  const projectRoot = context.opts.projectRoot;
+module.exports = async function (context) {
+  const { projectRoot } = context.opts;
+
+  const result = defaultGateway.v4.sync();
+  const ip = address.ip(result && result.interface);
+  const url = `http://${ip}`;
+
   const cordovaConfigPath = path.join(projectRoot, 'config.xml');
+  const cordovaConfig = fs.readFileSync(cordovaConfigPath, 'utf-8');
 
-  let cordovaConfig = fs.readFileSync(cordovaConfigPath, 'utf-8');
+  const json = await xmlToJs.parseStringPromise(cordovaConfig);
 
-  const lines = cordovaConfig.split(/\r?\n/g);
-  const regexContent = /\s+<content/;
-  // eslint-disable-next-line
-  const allowNavigationRegex = /<allow-navigation href="(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9])(:[0-9]+)?\/\*"\s?\/>/;
-  const contentIndex = lines.findIndex(line => line.match(regexContent));
-
-  if (contentIndex > -1) {
-    lines[contentIndex] = `    <content src="index.html"/>`;
-    // -1 because list is reversed
-    const foundAllowNavigationIndex = lines.findIndex(line =>
-      line.match(allowNavigationRegex)
+  json.widget.content[0].$.src = 'index.html';
+  if (json.widget['allow-navigation']) {
+    json.widget['allow-navigation'] = json.widget['allow-navigation'].filter(
+      (item) => !item.$.href.startsWith(url)
     );
-
-    if (foundAllowNavigationIndex > -1) {
-      lines.splice(foundAllowNavigationIndex, 1);
+    if (json.widget['allow-navigation'].length === 0) {
+      delete json.widget['allow-navigation'];
     }
-
-    cordovaConfig = lines.join('\n');
-    fs.writeFileSync(cordovaConfigPath, cordovaConfig);
   }
+
+  const builder = new xmlToJs.Builder();
+  const xml = builder.buildObject(json);
+
+  fs.writeFileSync(cordovaConfigPath, xml);
 
   const symlinkDestPath = path.join(projectRoot, '/public/cordova');
 

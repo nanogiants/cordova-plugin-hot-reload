@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "address": "^1.1.0",
-    "default-gateway": "^5.0.2"
+    "default-gateway": "^5.0.2",
+    "xml2js": "^0.4.23"
   },
   "cordova": {
     "id": "@appcominteractive/cordova-plugin-hot-reload",

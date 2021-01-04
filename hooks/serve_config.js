@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
 const address = require('address');
 const defaultGateway = require('default-gateway');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 const xmlToJs = require('xml2js');
 
 module.exports = async function (context) {
@@ -19,15 +19,16 @@ module.exports = async function (context) {
   const json = await xmlToJs.parseStringPromise(cordovaConfig);
 
   json.widget.content[0].$.src = url;
-  json.widget['allow-navigation'] = [
-    ...(json.widget['allow-navigation'] || []),
-    {
+  json.widget['allow-navigation'] = json.widget['allow-navigation'] || [];
+  if (
+    !json.widget['allow-navigation'].find((item) => item.$.href === `${url}/*`)
+  ) {
+    json.widget['allow-navigation'].push({
       $: {
         href: `${url}/*`,
       },
-    },
-  ];
-
+    });
+  }
   const builder = new xmlToJs.Builder();
   const xml = builder.buildObject(json);
   fs.writeFileSync(cordovaConfigPath, xml);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-hot-reload" version="0.2.2">
-    <name>Device</name>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="@appcominteractive/cordova-plugin-hot-reload" version="0.2.2">
+    <name>@appcominteractive/cordova-plugin-hot-reload</name>
     <description>Cordova Hot-Reload-Plugin</description>
     <license>MIT</license>
     <keywords>cordova</keywords>

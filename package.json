@@ -5,7 +5,8 @@
   "license": "MIT",
   "description": "Cordova Hot-Reload Plugin",
   "scripts": {
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "version": "sh update_version.sh"
   },
   "dependencies": {
     "address": "^1.1.0",

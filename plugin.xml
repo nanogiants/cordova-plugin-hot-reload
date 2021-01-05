@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-hot-reload" version="0.1.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-hot-reload" version="0.2.1">
     <name>Device</name>
     <description>Cordova Hot-Reload-Plugin</description>
     <license>MIT</license>
     <keywords>cordova</keywords>
     <hook src="hooks/prebuild_config.js" type="before_build"/>
     <hook src="hooks/serve_config.js" type="before_run"/>
-
 </plugin>

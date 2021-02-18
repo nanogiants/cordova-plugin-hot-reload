@@ -8,6 +8,8 @@ const xmlToJs = require('xml2js');
 module.exports = async function (context) {
   const { projectRoot } = context.opts;
 
+  let publicPath = 'public';
+
   const result = defaultGateway.v4.sync();
   const ip = address.ip(result && result.interface);
   const port = process.env.PORT;
@@ -17,6 +19,19 @@ module.exports = async function (context) {
   const cordovaConfig = fs.readFileSync(cordovaConfigPath, 'utf-8');
 
   const json = await xmlToJs.parseStringPromise(cordovaConfig);
+
+  const pluginFromConfigXML = json.widget.plugin.find(
+    (plugin) => plugin.$.name === '@appcominteractive/cordova-plugin-hot-reload'
+  );
+
+  if (pluginFromConfigXML) {
+    const publicPathVariable = pluginFromConfigXML.variable.find(
+      (variable) => variable.$.name === 'publicPath'
+    );
+    if (publicPathVariable) {
+      publicPath = publicPathVariable.$.value;
+    }
+  }
 
   json.widget.content[0].$.src = url;
   json.widget['allow-navigation'] = json.widget['allow-navigation'] || [];
@@ -48,11 +63,13 @@ module.exports = async function (context) {
       filename
     );
 
-    const symlinkDestPath = path.join(projectRoot, 'public', filename);
+    const symlinkDestPath = path.join(projectRoot, publicPath, filename);
 
     if (fs.existsSync(symlinkDestPath)) {
       fs.unlinkSync(symlinkDestPath);
     }
-    fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
+    if (fs.existsSync(symlinkSrcPath)) {
+      fs.symlinkSync(symlinkSrcPath, symlinkDestPath, symlinkType);
+    }
   });
 };

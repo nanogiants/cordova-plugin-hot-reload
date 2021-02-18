@@ -27,3 +27,15 @@ To serve your frontend files you could start your app like so
 ```
 
 you _have_ to set the `PORT` environment, so the plugin can point to the correct port.
+
+### Variables
+
+You can add variables to the plugin by adding the following to your `config.xml` in the `widget` tag:
+
+```xml
+<plugin name="@appcominteractive/cordova-plugin-hot-reload">
+  <variable name="publicPath" value="www"/>
+</plugin>
+```
+
+Now all symlinks get set to your folder named `www`. The path must be relative to your `config.xml`
